@@ -6,9 +6,8 @@ export default function Home() {
   return (
     <div>
       <Hero />
-      {/* <Drop/> */}
       <DragDropDesk />
-      {/* <DragDropModile/> */}
+      <DragDropModile />
     </div>
   );
 }

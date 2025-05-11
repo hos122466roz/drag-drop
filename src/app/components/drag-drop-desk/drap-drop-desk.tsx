@@ -1,45 +1,39 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { DragEvent, useEffect, useState } from "react";
 import interact from "interactjs";
 import Image from "next/image";
 import { Data, dorpbox } from "@/app/data/Data";
 import bgimag from "../../../../public/image/bg/box_16.png";
 import { MdDelete } from "react-icons/md";
-
+import AddButton from "./AddButton";
 const DragDropDesk = () => {
-  const [show, setShow] = useState(false);
   const [text, setText] = useState(false);
+  const [show,setShow]=useState(false)
   useEffect(() => {
-    function dragMoveListener(event: any) {
-      var target = event.target,
-        // keep the dragged position in the data-x/data-y attributes
-        x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx,
-        y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
+    console.log(show);
+    function dragMoveListener(event) {
+      let target = event.target;
+    const  x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx
+    const    y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy
 
-      // translate the element
       target.style.webkitTransform = target.style.transform =
         "translate(" + x + "px, " + y + "px)";
 
-      // update the posiion attributes
       target.setAttribute("data-x", x);
       target.setAttribute("data-y", y);
     }
     interact(".dropzone").dropzone({
-      // only accept elements matching this CSS selector
       accept: "#yes-drop",
-      // Require a 75% element overlap for a drop to be possible
       overlap: 0.5,
 
-      // listen for drop related events:
 
       ondropactivate: function (event) {
-        // add active dropzone feedback
 
         event.target.classList.add("drop-active");
       },
       ondragenter: function (event) {
-        var dropzoneElement = event.target;
-        var draggableElement = event.relatedTarget;
+        let dropzoneElement = event.target;
+        let draggableElement = event.relatedTarget;
 
         // feedback the possibility of a drop
         dropzoneElement.classList.add("drop-target");
@@ -89,10 +83,11 @@ const DragDropDesk = () => {
         move: dragMoveListener,
         start(event) {
           setText(true);
-          setShow(true);
+          setShow(true)
           event.target.classList.add("drop-start");
         },
         end(event) {
+          setShow(false )
           const parentNode = event.target.parentNode;
           const target = event.target;
           target.removeAttribute("data-x");
@@ -118,7 +113,6 @@ const DragDropDesk = () => {
           const deleteDrog = document.querySelector("#delete-drag");
           deleteDrog?.classList.add("drag-deleted");
           setText(true);
-          setShow(true);
           event.target.classList.add("drop-start");
         },
         end(event) {
@@ -138,11 +132,11 @@ const DragDropDesk = () => {
         },
       },
     });
-  }, []);
+  }, [show]);
 
   return (
     <>
-      <section className="container overflow-hidden relative my-50 md:my-20  ">
+      <section className="container overflow-hidden relative my-20 md:my-30  ">
         <div
           className={` md:w-[68%] w-[100%] relative  mx-auto parent z-50
                `}
@@ -150,6 +144,7 @@ const DragDropDesk = () => {
         >
           <Image alt="bg" src={bgimag} />
           <div
+
             className={`md:p-2.5 p-1.5 top-0  *:rounded-[4px]  absolute right-0 flex flex-wrap md:gap-0.5 w-full h-full 
              *:border-white `}
           >
@@ -168,7 +163,9 @@ const DragDropDesk = () => {
               ></div>
             ))}
           </div>
+          {/* <Drop/> */}
         </div>{" "}
+        <AddButton/>
         <div
           id="delete-drag"
           className="w-full absolute  h-full right-0 top-0 hidden  justify-center items-start md:pt-80 pt-30 "
