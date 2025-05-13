@@ -45,7 +45,7 @@
   margin-inline: auto;
   
   @variant sm {
-    padding-inline: 20px;
+    padding-inline: 40px;
   }
   
   @variant lg {
@@ -53,7 +53,7 @@
   }
   
   @variant xl {
-    padding-inline: 120px;
+    padding-inline: 200px;
   }
 }
 
@@ -64,10 +64,8 @@ button{
 cursor: pointer;
 }
 .dropbox{
-  flex:0 0 12.2%;
-  height: 50%;
-      max-width: 108px;
-    max-height: 108px;
+  flex:0 0 10%;
+
 }
 @media  (mxn-width:300px) {
   .dropbox{
@@ -88,58 +86,8 @@ background-position: top 0 right 80%;
 
 
 
-.dropzone {
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-.drop-active {
-    border:1px solid #fff;
-}
-
-.drop-target {
-  background-color: rgb(100, 116, 203);
-  border:3px solid #fff;
-
-  
-}
-
-.draging{
-  transition: .75s;
-}
-input{
-  vertical-align: middle;
-}
-.drag-drop,.drag-drop2 {
-  display: inline-block;
-   touch-action: none;
+.drag{
+  touch-action: none;
   user-select: none;
-
- 
-  transform: translate(0px, 0px);
-
-  transition: background-color 0.3s;
-}
-.drop-start{
-  z-index: 50;
-  position: relative;
-}
-.drag-drop.can-drop {
-  width: 100%;
-  height: 100%;
-}
-.drag-delete{
-  width: 0;
-  height: 0;
-  opacity: 0;
-  transition: 1s;
-}
-.drag-deleted{
-  background-color: rgba(211, 211, 211, 0.652);z-index: 40;
-  backdrop-filter: blur(5);
-  display: flex;
-
-}
-.modal-bod-hidden{
-overflow: hidden;
+  
 }
