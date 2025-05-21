@@ -1,16 +1,26 @@
-'use Client'
-import useDrapDrop from "@/app/hooks/useDragDrop";
-import React from 'react';
+"use Client";
+import useCoin from "@/app/hooks/useCoin";
+import React, { useState } from "react";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
+import CoinThrow from "../coinThrow/CoinThrow";
 interface AddButtonProps {
   clicked?: () => void;
   shut?: () => void;
 }
-const AddButton:React.FC<AddButtonProps> = ({clicked,shut}) => {
-  const useDraprop = useDrapDrop();
-  
-    return (
-      <>
+const AddButton: React.FC<AddButtonProps> = ({ clicked, shut }) => {
+  const useCoins = useCoin();
+  const [number, setNumber] = useState(1);
+  const onDecrease = () => {
+    if (number <= 1) {
+      return;
+    }
+    setNumber(number - 1);
+  };
+  const onnIncrease = () => {
+    setNumber(number + 1);
+  };
+  return (
+    <>
       <div className="flex  items-start justify-start flex-col md:flex-row my-8">
         <div className="md:w-1/2   ">
           <div
@@ -19,15 +29,12 @@ const AddButton:React.FC<AddButtonProps> = ({clicked,shut}) => {
           >
             <button className="grow md:grow-0">Keyboarding</button>
             <button className="grow md:grow-0">Keyboarding</button>
-            <button
-              className="block md:hidden bg-blue-800 text-white  md:grow-0 grow"
-              onClick={() => useDraprop.onOpen()}
-            >
+            <button className="block md:hidden bg-blue-800 text-white  md:grow-0 grow">
               Create box
             </button>
             <button>Keyboarding</button>
             <button onClick={clicked}>Clear all</button>
-            <button onClick={shut}>  ScreenShout </button>
+            <button onClick={shut}> ScreenShout </button>
           </div>
           <div className="md:block hidden mt-8 text-[14px]">
             Are you a business with a specific request for your custom boxes ?
@@ -52,28 +59,36 @@ const AddButton:React.FC<AddButtonProps> = ({clicked,shut}) => {
           </div>
           <div className="mt-8 flex items-start text-[16px] md:text-xl gap-x-5 *:rounded-[4px] ">
             <div className="flex w-1/6 min-w-[100px] border items-center   justify-between">
-              <div className=" text-2xl cursor-pointer  flex justify-ennd items-center align-middle">
+              <div
+                onClick={onDecrease}
+                className=" text-2xl cursor-pointer  flex justify-end items-center align-middle"
+              >
                 <CiCircleMinus />
               </div>
-              <div className="p-2 ">1</div>
-              <div className=" text-2xl cursor-pointer flex justify-end items-center align-middle">
+              <div className="p-2 ">{number}</div>
+              <div
+                onClick={onnIncrease}
+                className=" text-2xl cursor-pointer flex justify-end items-center align-middle"
+              >
                 <CiCirclePlus />
               </div>
             </div>
             <div className="bg-blue-800 text-white  h-auto">
               <button
+                onClick={() => useCoins.onOpen()}
                 className="py-2 px-3 md:px-6 
                "
               >
                 <span>19.3$ - </span>
                 Add to Cart
               </button>
+              <CoinThrow />
             </div>
           </div>
         </div>
       </div>
-      </>
-    );
-}
+    </>
+  );
+};
 
 export default AddButton;

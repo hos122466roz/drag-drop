@@ -1,9 +1,11 @@
-'use client'
+"use client";
 // import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header/Header";
-import useDrapDrop from "./hooks/useDragDrop";
+import Footer from "./components/footer/Footer";
+import ToasterProvider from "./providers/ToasterProvider";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,15 +27,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const useDragdrop = useDrapDrop();
+  const pathname = usePathname();
+  const hideFooter = pathname && pathname.startsWith("/profile");
 
   return (
     <html lang="fa" dir="ltr">
       <body
-        className={`${useDragdrop.isOpen? 'modal-bod-hidden':''} ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={` 'modal-bod-hidden':''} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header/>
+        {!hideFooter && <Header />}
+
+        <ToasterProvider />
         {children}
+        {!hideFooter && <Footer />}
       </body>
     </html>
   );
